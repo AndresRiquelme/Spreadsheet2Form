@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Spreadsheet2Form</title>
+
+    <link rel="stylesheet" href="preview.css">
+
+</head>
+
+<body>
+
+    <!-- ===================================================== -->
+    <!-- Header -->
+    <!-- ===================================================== -->
+
+    <header id="header">
+
+        <div>
+
+            <h1>Spreadsheet2Form</h1>
+
+            <div id="version"></div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ===================================================== -->
+    <!-- Mode + Legend -->
+    <!-- ===================================================== -->
+
+    <div id="topBoxes">
+
+        <div id="modeBox">
+
+            <!-- Filled by preview.js -->
+
+        </div>
+
+
+        <div id="legendBox">
+
+            <h3>Legend</h3>
+
+            <div class="legendRow">
+
+                <span class="legendColor yellow"></span>
+
+                <span>
+
+                    Yellow input boxes on the grading page
+                    indicate grades updated by
+                    Spreadsheet2Form.
+
+                </span>
+
+            </div>
+
+            <div class="legendRow">
+
+                Reload the grading page at any time to
+                discard all changes before submitting.
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- Summary -->
+    <!-- ===================================================== -->
+
+<div id="summaryCards">
+
+    <div class="summaryCard updates">
+
+        <div class="summaryNumber" id="updatesCount">0</div>
+
+        <div class="summaryLabel">
+            Updates
+        </div>
+
+    </div>
+
+
+    <div class="summaryCard same">
+
+        <div class="summaryNumber" id="sameCount">0</div>
+
+        <div class="summaryLabel">
+            Already Correct
+        </div>
+
+    </div>
+
+
+    <div class="summaryCard missing">
+
+        <div class="summaryNumber" id="missingCount">0</div>
+
+        <div class="summaryLabel">
+            Missing IDs
+        </div>
+
+    </div>
+
+
+    <div class="summaryCard duplicate">
+
+        <div class="summaryNumber" id="duplicateCount">0</div>
+
+        <div class="summaryLabel">
+            Duplicate IDs
+        </div>
+
+    </div>
+
+</div>
+
+
+    <!-- ===================================================== -->
+    <!-- Comparison table -->
+    <!-- ===================================================== -->
+
+    <table id="previewTable">
+
+        <thead>
+
+            <tr>
+
+                <th>Student ID</th>
+
+                <th>Current Grade</th>
+
+                <th>New Grade</th>
+
+                <th>Status</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <!-- Filled by preview.js -->
+
+        </tbody>
+
+    </table>
+
+
+<!-- ===================================================== -->
+<!-- Sticky Action Bar -->
+<!-- ===================================================== -->
+
+<div id="actionBar">
+
+    <div id="actionMessage">
+
+        <strong>Review completed?</strong><br>
+
+        Spreadsheet2Form updates the grade fields on the
+        grading page only. The grades are <strong>not submitted</strong>.
+        You must still use the grading page's own
+        <strong>Submit</strong> button to finalize the grades.
+
+    </div>
+
+    <div id="actionButtons">
+
+        <button id="cancel">
+
+            Close
+
+        </button>
+
+        <button id="apply">
+
+            Update Grading Page
+
+        </button>
+
+    </div>
+
+</div>
+
+
+    <!-- ===================================================== -->
+    <!-- Footer -->
+    <!-- ===================================================== -->
+
+    <footer>
+
+        <strong>Spreadsheet2Form</strong>
+
+        <span id="footerVersion"></span>
+
+        <br><br>
+
+        Developed by Andrés Riquelme
+
+    </footer>
+
+
+    <script src="preview.js"></script>
+
+</body>
+
+</html>

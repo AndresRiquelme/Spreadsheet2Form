@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+
+  "name": "Spreadsheet2Form",
+
+  "version": "1.0",
+
+  "description": "Transfer grades from spreadsheets to Firefox forms safely.",
+
+  "permissions": [
+    "activeTab",
+    "clipboardRead",
+    "tabs",
+    "storage"
+  ],
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "action": {
+    "default_popup": "popup.html"
+  },
+
+"content_scripts": [
+  {
+    "matches": ["<all_urls>"],
+    "js": ["content.js"]
+  }
+]
+}
