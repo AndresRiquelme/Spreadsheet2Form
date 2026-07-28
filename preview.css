@@ -3,10 +3,19 @@
    ========================================================== */
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 25px;
-    background: #f7f7f7;
-    color: #333;
+    font-family:
+        "Segoe UI",
+        "Noto Sans",
+        Arial,
+        sans-serif;
+
+    margin: 0;
+    padding: 28px;
+
+    background: #f4f5f7;
+    color: #2f3437;
+
+    line-height: 1.45;
 }
 
 /* ==========================================================
@@ -22,7 +31,8 @@ body {
 
 #header h1 {
     margin: 0;
-    color: #1f4e79;
+    color: #3f5f79;
+    font-weight: 600;
 }
 
 #version {
@@ -50,28 +60,24 @@ body {
 
     flex: 1;
 
+    background: #fcfcfc;
+
+    border: 1px solid #d8dde3;
+
     border-radius: 8px;
 
-    padding: 16px;
+    padding: 18px;
 
     box-sizing: border-box;
 
 }
 
 #modeBox {
-
-    background: #eef6ff;
-
-    border-left: 6px solid #2c7be5;
-
+    border-left: 5px solid #3f5f79;
 }
 
 #legendBox {
-
-    background: #fff8dc;
-
-    border-left: 6px solid #f0ad00;
-
+    border-left: 5px solid #8d98a4;
 }
 
 #modeBox h3,
@@ -146,7 +152,10 @@ body {
 
     padding: 18px;
 
-    box-shadow: 0 2px 6px rgba(0,0,0,.15);
+    border: 1px solid #d8dde3;
+    
+    border: 1px solid #d8dde3;
+box-shadow: none;box-shadow: none;
 
 }
 
@@ -168,30 +177,25 @@ body {
 
 }
 
-.summaryCard.updates {
-
-    background: #2E8B57;
-
+.summaryCard.updates{
+    background:#dbe8f2;
+    color:#294e6b;
 }
 
-.summaryCard.same {
-
-    background: #3B82F6;
-
+.summaryCard.same{
+    background:#e6efe7;
+    color:#3f5f49;
 }
 
-.summaryCard.missing {
-
-    background: #DC3545;
-
+.summaryCard.missing{
+    background:#f5ead9;
+    color:#7b5d23;
 }
 
-.summaryCard.duplicate {
-
-    background: #F0AD00;
-
+.summaryCard.duplicate{
+    background:#f1dddd;
+    color:#7b3232;
 }
-
 
 /* ==========================================================
    Preview Table
@@ -203,17 +207,17 @@ body {
 
     border-collapse: collapse;
 
-    background: white;
-
-    box-shadow: 0 2px 6px rgba(0,0,0,.12);
+background:#fcfcfc;
+border:1px solid #d8dde3;
+box-shadow:none;
 
 }
 
 #previewTable thead {
 
-    background: #1f4e79;
+    background:#3f5f79;
 
-    color: white;
+    color:white;
 
 }
 
@@ -265,11 +269,8 @@ tr.duplicate {
 /* Hover */
 
 #previewTable tbody tr:hover {
-
-    background: #f3f3f3 !important;
-
+    background:#eef4f8 !important;
 }
-
 
 /* ==========================================================
    Sticky Action Bar
@@ -293,11 +294,11 @@ tr.duplicate {
 
     padding: 18px 24px;
 
-    background: #ffffff;
+    background: #fcfcfc;
 
     border-top: 1px solid #cfd6dc;
 
-    box-shadow: 0 -2px 8px rgba(0,0,0,.08);
+    box-shadow: none;
 
 }
 
@@ -347,38 +348,37 @@ button {
 
 /* Primary */
 
-#apply {
+#apply{
 
-    background: #4A5A6A;
+    background:#3f5f79;
 
-    color: white;
+    border:1px solid #3f5f79;
 
-    border: 1px solid #4A5A6A;
-
-}
-
-#apply:hover {
-
-    background: #3E4C59;
+    color:white;
 
 }
 
+#apply:hover{
+
+    background:#345066;
+
+}
 
 /* Secondary */
 
-#cancel {
+#cancel{
 
-    background: white;
+    background:#eceff2;
 
-    color: #4A5A6A;
+    color:#2f3437;
 
-    border: 1px solid #AEB7C1;
+    border:1px solid #c6ced6;
 
 }
 
-#cancel:hover {
+#cancel:hover{
 
-    background: #F4F6F8;
+    background:#dde3e8;
 
 }
 
@@ -394,13 +394,15 @@ footer {
 
     border-top: 1px solid #cccccc;
 
-    color: #666;
+    color: #6b7280;
 
     text-align: center;
 
     font-size: 13px;
 
     line-height: 1.7;
+    
+    letter-spacing:.3px;
 
 }
 
@@ -442,42 +444,143 @@ footer {
    Status badges
    ========================================================== */
 
-.statusBadge {
+.statusBadge{
 
-    display: inline-block;
+    display:inline-block;
 
-    padding: 4px 10px;
+    padding:4px 10px;
 
-    border-radius: 12px;
+    border-radius:14px;
 
-    font-size: 12px;
+    font-size:12px;
 
-    font-weight: bold;
+    font-weight:600;
+
+}
+
+.statusBadge.update{
+
+    background:#dbe8f2;
+
+    color:#294e6b;
+
+}
+
+.statusBadge.same{
+
+    background:#e6efe7;
+
+    color:#3f5f49;
+
+}
+
+.statusBadge.missing{
+
+    background:#f5ead9;
+
+    color:#7b5d23;
+
+}
+
+.statusBadge.duplicate{
+
+    background:#f1dddd;
+
+    color:#7b3232;
+
+}
+/* ==========================================================
+   Modal Dialog
+   ========================================================== */
+
+.hidden {
+    display: none !important;
+}
+
+#modalOverlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,.35);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 5000;
+
+}
+
+#modalWindow {
+
+    width: 520px;
+
+    max-width: 90%;
+
+    background: white;
+
+    border: 1px solid #cfd6dc;
+
+    border-radius: 6px;
+
+    box-shadow: 0 10px 35px rgba(0,0,0,.25);
+
+    overflow: hidden;
+
+}
+
+#modalHeader {
+
+    background: #4A5A6A;
 
     color: white;
 
-}
-
-.statusBadge.update {
-
-    background: #6C7A89;
+    padding: 14px 20px;
 
 }
 
-.statusBadge.same {
+#modalHeader h2 {
 
-    background: #9099A1;
+    margin: 0;
 
-}
+    font-size: 18px;
 
-.statusBadge.missing {
-
-    background: #A65252;
+    font-weight: 600;
 
 }
 
-.statusBadge.duplicate {
+#modalBody {
 
-    background: #A67C52;
+    padding: 24px;
+
+    line-height: 1.7;
+
+    color: #444;
+
+}
+
+#modalButtons {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    padding: 16px 20px;
+
+    border-top: 1px solid #d9d9d9;
+
+    background: #f8f9fa;
+
+}
+
+#modalButtons button {
+
+    min-width: 120px;
 
 }

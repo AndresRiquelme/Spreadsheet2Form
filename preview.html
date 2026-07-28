@@ -5,7 +5,7 @@
 
     <meta charset="UTF-8">
 
-    <title>Spreadsheet2Form</title>
+    <title>Spreadsheet2Form Preview</title>
 
     <link rel="stylesheet" href="preview.css">
 
@@ -13,78 +13,65 @@
 
 <body>
 
-    <!-- ===================================================== -->
-    <!-- Header -->
-    <!-- ===================================================== -->
+<header>
 
-    <header id="header">
+    <h1>Spreadsheet2Form</h1>
 
-        <div>
+    <div id="version"></div>
 
-            <h1>Spreadsheet2Form</h1>
-
-            <div id="version"></div>
-
-        </div>
-
-    </header>
+</header>
 
 
-    <!-- ===================================================== -->
-    <!-- Mode + Legend -->
-    <!-- ===================================================== -->
+<main>
+
+    <h2>Preview of Proposed Grade Changes</h2>
+
+
+    <!-- ======================================================
+         Top information
+         ====================================================== -->
 
     <div id="topBoxes">
 
-        <div id="modeBox">
+        <section id="modeBox">
+        </section>
 
-            <!-- Filled by preview.js -->
-
-        </div>
-
-
-        <div id="legendBox">
+        <section id="legendBox">
 
             <h3>Legend</h3>
 
-            <div class="legendRow">
+            <ul>
 
-                <span class="legendColor yellow"></span>
+                <li><span class="statusBadge update">Update</span> Grade will be changed</li>
 
-                <span>
+                <li><span class="statusBadge same">Correct</span> Grade already matches</li>
 
-                    Yellow input boxes on the grading page
-                    indicate grades updated by
-                    Spreadsheet2Form.
+                <li><span class="statusBadge missing">Missing</span> Student ID not found</li>
 
-                </span>
+                <li><span class="statusBadge duplicate">Duplicate</span> Duplicate Student ID in spreadsheet</li>
 
-            </div>
+            </ul>
 
-            <div class="legendRow">
-
-                Reload the grading page at any time to
-                discard all changes before submitting.
-
-            </div>
-
-        </div>
+        </section>
 
     </div>
 
 
-    <!-- ===================================================== -->
-    <!-- Summary -->
-    <!-- ===================================================== -->
+    <!-- ======================================================
+         Summary
+         ====================================================== -->
 
-<div id="summaryCards">
+ <div id="summaryCards">
 
     <div class="summaryCard updates">
 
-        <div class="summaryNumber" id="updatesCount">0</div>
+        <div class="summaryNumber"
+             id="updatesCount">0</div>
 
         <div class="summaryLabel">
-            Updates
+
+            Will Update
+
         </div>
 
     </div>
@@ -92,10 +79,13 @@
 
     <div class="summaryCard same">
 
-        <div class="summaryNumber" id="sameCount">0</div>
+        <div class="summaryNumber"
+             id="sameCount">0</div>
 
         <div class="summaryLabel">
-            Already Correct
+
+            Unchanged
+
         </div>
 
     </div>
@@ -103,10 +93,13 @@
 
     <div class="summaryCard missing">
 
-        <div class="summaryNumber" id="missingCount">0</div>
+        <div class="summaryNumber"
+             id="missingCount">0</div>
 
         <div class="summaryLabel">
-            Missing IDs
+
+            Not Found
+
         </div>
 
     </div>
@@ -114,33 +107,50 @@
 
     <div class="summaryCard duplicate">
 
-        <div class="summaryNumber" id="duplicateCount">0</div>
+        <div class="summaryNumber"
+             id="duplicateCount">0</div>
 
         <div class="summaryLabel">
-            Duplicate IDs
+
+            Duplicate
+
         </div>
 
     </div>
 
 </div>
 
+    <!-- ======================================================
+         Information
+         ====================================================== -->
 
-    <!-- ===================================================== -->
-    <!-- Comparison table -->
-    <!-- ===================================================== -->
+    <div class="note">
+
+        Updated grade fields on the grading page will be
+        highlighted in pale yellow.
+
+        Spreadsheet2Form never submits grades automatically.
+
+    </div>
+
+
+    <!-- ======================================================
+         Preview table
+         ====================================================== -->
 
     <table id="previewTable">
 
         <thead>
 
             <tr>
+
                 <th>Name</th>
-                
+
                 <th>Student ID</th>
 
-                <th>Current Grade</th>
+                <th>Current</th>
 
-                <th>New Grade</th>
+                <th>New</th>
 
                 <th>Status</th>
 
@@ -150,16 +160,16 @@
 
         <tbody>
 
-            <!-- Filled by preview.js -->
-
         </tbody>
 
     </table>
 
+</main>
 
-<!-- ===================================================== -->
-<!-- Sticky Action Bar -->
-<!-- ===================================================== -->
+
+<!-- ==========================================================
+     Sticky Action Bar
+     ========================================================== -->
 
 <div id="actionBar">
 
@@ -167,10 +177,13 @@
 
         <strong>Review completed?</strong><br>
 
-        Spreadsheet2Form updates the grade fields on the
-        grading page only. The grades are <strong>not submitted</strong>.
+        Spreadsheet2Form updates only the grade fields on the
+        grading page.
+
+        Grades are <strong>not submitted</strong> automatically.
+
         You must still use the grading page's own
-        <strong>Submit</strong> button to finalize the grades.
+        <strong>Submit</strong> button.
 
     </div>
 
@@ -193,29 +206,16 @@
 </div>
 
 
-    <!-- ===================================================== -->
-    <!-- Footer -->
-    <!-- ===================================================== -->
+<footer>
 
-    <footer>
+    <div id="footerVersion"></div>
 
-        <strong>Spreadsheet2Form</strong>
-
-        <span id="footerVersion"></span>
-
-        <br><br>
-
-        Developed by Andrés Riquelme
-
-    </footer>
+</footer>
 
 
-    <script src="preview.js"></script>
-
-</body>
 
 <!-- ==========================================================
-     Modal Dialog
+     Modal dialog
      ========================================================== -->
 
 <div id="modalOverlay" class="hidden">
@@ -225,7 +225,9 @@
         <div id="modalHeader">
 
             <h2 id="modalTitle">
-                Confirmation
+
+                Spreadsheet2Form
+
             </h2>
 
         </div>
@@ -255,5 +257,10 @@
     </div>
 
 </div>
+
+
+<script src="preview.js"></script>
+
+</body>
 
 </html>
