@@ -1,0 +1,15 @@
+# Linux
+*~
+
+# Windows
+Thumbs.db
+
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+
+# Temporary files
+*.tmp
+*.bak
