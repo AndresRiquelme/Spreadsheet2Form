@@ -20,11 +20,34 @@ console.log("Spreadsheet2Form Preview loaded");
 // ======================================================
 
 const STATUS = Object.freeze({
-
     UPDATE: "update",
     SAME: "same",
     MISSING: "missing",
     DUPLICATE: "duplicate"
+
+});
+
+const STATUS_INFO = Object.freeze({
+
+    [STATUS.UPDATE]: {
+        className: "update",
+        label: "Update"
+    },
+
+    [STATUS.SAME]: {
+        className: "same",
+        label: "Correct"
+    },
+
+    [STATUS.MISSING]: {
+        className: "missing",
+        label: "Missing"
+    },
+
+    [STATUS.DUPLICATE]: {
+        className: "duplicate",
+        label: "Duplicate"
+    }
 
 });
 
@@ -253,104 +276,82 @@ Webpage rows:
     }
 }
 
-
-
 // ======================================================
-// Summary Cards
+// Render Summary Cards
 // ======================================================
 
 function renderSummary(data)
 {
-    let updates = 0;
-    let same = 0;
-    let missing = 0;
-    let duplicate = 0;
+    const counts = {
+        [STATUS.UPDATE]: 0,
+        [STATUS.SAME]: 0,
+        [STATUS.MISSING]: 0,
+        [STATUS.DUPLICATE]: 0
+    };
 
-    data.forEach(row => {
-
-        switch (row.status)
+    for (const row of data)
+    {
+        if (counts[row.status] !== undefined)
         {
-            case STATUS.UPDATE:
-                updates++;
-                break;
-
-            case STATUS.SAME:
-                same++;
-                break;
-
-            case STATUS.MISSING:
-                missing++;
-                break;
-
-            case STATUS.DUPLICATE:
-                duplicate++;
-                break;
+            counts[row.status]++;
         }
+    }
 
-    });
+    const elements = {
 
-    document.getElementById("updatesCount").textContent =
-        updates;
+        [STATUS.UPDATE]:
+            document.getElementById("updatesCount"),
 
-    document.getElementById("sameCount").textContent =
-        same;
+        [STATUS.SAME]:
+            document.getElementById("sameCount"),
 
-    document.getElementById("missingCount").textContent =
-        missing;
+        [STATUS.MISSING]:
+            document.getElementById("missingCount"),
 
-    document.getElementById("duplicateCount").textContent =
-        duplicate;
+        [STATUS.DUPLICATE]:
+            document.getElementById("duplicateCount")
+
+    };
+
+    for (const status in elements)
+    {
+        elements[status].textContent =
+            counts[status];
+    }
 }
 
-
-
 // ======================================================
-// Preview Table
+// Render Preview Table
 // ======================================================
 
 function renderTable(data)
 {
     const tbody =
-        document.querySelector(
-            "#previewTable tbody"
-        );
+        document.querySelector("#previewTable tbody");
 
     tbody.innerHTML = "";
 
-    data.forEach(row => {
+    for (const row of data)
+    {
+        tbody.appendChild(
+            createTableRow(row)
+        );
+    }
+}
 
-        const tr =
-            document.createElement("tr");
+// ======================================================
+// Create Table Row
+// ======================================================
 
-        tr.className =
-            row.status;
+function createTableRow(row)
+{
+    const tr =
+        document.createElement("tr");
 
-        let badge = "";
+    tr.className =
+        row.status;
 
-        switch (row.status)
-        {
-            case STATUS.UPDATE:
-                badge =
-                    "<span class='statusBadge update'>Update</span>";
-                break;
-
-            case STATUS.SAME:
-                badge =
-                    "<span class='statusBadge same'>Correct</span>";
-                break;
-
-            case STATUS.MISSING:
-                badge =
-                    "<span class='statusBadge missing'>Missing</span>";
-                break;
-
-            case STATUS.DUPLICATE:
-                badge =
-                    "<span class='statusBadge duplicate'>Duplicate</span>";
-                break;
-        }
-
-        tr.innerHTML = `
+    tr.innerHTML = `
 
 <td>${row.name ?? ""}</td>
 
@@ -360,16 +361,35 @@ function renderTable(data)
 
 <td>${row.newValue}</td>
 
-<td>${badge}</td>
+<td>${createStatusBadge(row.status)}</td>
 
 `;
 
-        tbody.appendChild(tr);
-
-    });
-
+    return tr;
 }
 
+// ======================================================
+// Create Status Badge
+// ======================================================
+
+function createStatusBadge(status)
+{
+    const info =
+        STATUS_INFO[status];
+
+    if (!info)
+    {
+        return "";
+    }
+
+    return `
+
+<span class="statusBadge ${info.className}">
+    ${info.label}
+</span>
+
+`;
+}
 
 
 // ======================================================
