@@ -1,10 +1,122 @@
 // ======================================================
-// Spreadsheet2Form - preview.js
+//
+// Spreadsheet2Form
+// Preview Module
+//
+// Firefox extension for safely transferring grades
+// from spreadsheets to web-based grading systems.
+//
+// Developed by Andrés Riquelme
+// Version 1.0 (Beta)
+//
 // ======================================================
+
+"use strict";
 
 console.log("Spreadsheet2Form Preview loaded");
 
+// ======================================================
+// Constants
+// ======================================================
+
+const STATUS = Object.freeze({
+
+    UPDATE: "update",
+    SAME: "same",
+    MISSING: "missing",
+    DUPLICATE: "duplicate"
+
+});
+
+const MODE = Object.freeze({
+
+    ID: "id",
+    SEQUENTIAL: "sequential"
+
+});
+
+// ======================================================
+// Global State
+// ======================================================
+
 let previewData = null;
+
+// ======================================================
+// Modal Dialog
+// ======================================================
+
+let modalResolve = null;
+
+const modalOverlay =
+    document.getElementById("modalOverlay");
+
+const modalTitle =
+    document.getElementById("modalTitle");
+
+const modalMessage =
+    document.getElementById("modalMessage");
+
+const modalOk =
+    document.getElementById("modalOk");
+
+const modalCancel =
+    document.getElementById("modalCancel");
+
+// ======================================================
+// Modal Dialog
+// ======================================================
+
+function showModal({
+    title = "Spreadsheet2Form",
+    message = "",
+    okText = "OK",
+    cancelText = "Cancel",
+    showCancel = true
+})
+{
+    modalTitle.textContent = title;
+
+    modalMessage.textContent = message;
+
+    modalOk.textContent = okText;
+
+    modalCancel.textContent = cancelText;
+
+    modalCancel.style.display =
+        showCancel ? "" : "none";
+
+    modalOverlay.classList.remove("hidden");
+
+    modalOk.focus();
+
+    return new Promise(resolve => {
+
+        modalResolve = resolve;
+
+    });
+}
+
+
+function hideModal(result)
+{
+    modalOverlay.classList.add("hidden");
+
+    if (modalResolve)
+    {
+        modalResolve(result);
+        modalResolve = null;
+    }
+}
+
+modalOk.addEventListener(
+    "click",
+    () => hideModal(true)
+);
+
+modalCancel.addEventListener(
+    "click",
+    () => hideModal(false)
+);
 
 // ======================================================
 // Initialization
@@ -96,7 +208,7 @@ function renderMode(
     const box =
         document.getElementById("modeBox");
 
-    if (mode === "id")
+    if (mode === MODE.ID)
     {
         box.innerHTML = `
 
@@ -158,19 +270,19 @@ function renderSummary(data)
 
         switch (row.status)
         {
-            case "update":
+            case STATUS.UPDATE:
                 updates++;
                 break;
 
-            case "same":
+            case STATUS.SAME:
                 same++;
                 break;
 
-            case "missing":
+            case STATUS.MISSING:
                 missing++;
                 break;
 
-            case "duplicate":
+            case STATUS.DUPLICATE:
                 duplicate++;
                 break;
         }
@@ -217,22 +329,22 @@ function renderTable(data)
 
         switch (row.status)
         {
-            case "update":
+            case STATUS.UPDATE:
                 badge =
                     "<span class='statusBadge update'>Update</span>";
                 break;
 
-            case "same":
+            case STATUS.SAME:
                 badge =
                     "<span class='statusBadge same'>Correct</span>";
                 break;
 
-            case "missing":
+            case STATUS.MISSING:
                 badge =
                     "<span class='statusBadge missing'>Missing</span>";
                 break;
 
-            case "duplicate":
+            case STATUS.DUPLICATE:
                 badge =
                     "<span class='statusBadge duplicate'>Duplicate</span>";
                 break;
@@ -271,7 +383,7 @@ async function applyChanges()
 
     const updates =
         comparison.filter(
-            row => row.status === "update"
+            row => row.status === STATUS.DUPLICATE
         );
 
     if (updates.length === 0)
