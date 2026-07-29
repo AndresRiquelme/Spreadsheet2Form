@@ -1,80 +1,87 @@
-// clipboard.js
+// Clipboard Normalization
 //
-// Reads the clipboard and converts it into a JavaScript object.
+// Converts clipboard data from different spreadsheet
+// applications (LibreOffice, Excel, Google Sheets, etc.)
+// into a common internal representation.
 //
-// Supported formats:
+// Developed by Andrés Riquelme
+// Version 1.0 (Beta)
 //
-// 1 column:
-//
-//      5.5
-//      6.0
-//      4.8
-//
-// becomes
-//
-//      mode = "sequential"
-//
-//      [
-//          {score:"5.5"},
-//          {score:"6.0"},
-//          {score:"4.8"}
-//      ]
-//
-// ------------------------------------
-//
-// 2 columns:
-//
-//      YYYYICO001<TAB>5.5
-//      YYYYICO002<TAB>6.0
-//
-// becomes
-//
-//      mode = "id"
-//
-//      [
-//          {id:"YYYYICO001",score:"5.5"},
-//          {id:"YYYYICO002",score:"6.0"}
-//      ]
+// ======================================================
+
+"use strict";
+
+// ======================================================
+// Public API
+// ======================================================
 
 async function readClipboard()
 {
-    const text = await navigator.clipboard.readText();
+    const rawText =
+        await navigator.clipboard.readText();
 
-    let lines = text.split(/\r?\n/);
+    const lines =
+        normalizeLines(rawText);
 
-    // Remove trailing blank lines
-    while (lines.length && lines[lines.length-1].trim() === "")
+    const table =
+        buildTable(lines);
+
+    return {
+
+        rawText: rawText,
+
+        lines: lines,
+
+        table: table
+
+    };
+}
+
+// ======================================================
+// Normalize Lines
+// ======================================================
+
+function normalizeLines(text)
+{
+    const lines =
+        text.split(/\r?\n/);
+
+    while (
+        lines.length > 0 &&
+        lines[lines.length - 1].trim() === ""
+    )
+    {
         lines.pop();
+    }
 
-    let result = [];
+    return lines;
+}
 
-    let mode = null;
+// ======================================================
+// Build Table
+// ======================================================
+
+
+function buildTable(lines)
+{
+    const table = [];
 
     for (const line of lines)
     {
-        const cols = line.split("\t");
+        console.log("RAW LINE:", JSON.stringify(line));
 
-        if (cols.length == 1)
-        {
-            mode = "sequential";
+const cells =
+    line
+        .split("\t")
+        .map(cell => cell.trim());
+// LibreOffice Calc keeps empty columns when copying
+// non-contiguous selections (Ctrl + click). Remove
+// those empty fields before validation.
+const normalized =
+    cells.filter(cell => cell !== "");
 
-            result.push({
-                score: cols[0].trim()
-            });
-        }
-        else
-        {
-            mode = "id";
-
-            result.push({
-                id: cols[0].trim(),
-                score: cols[cols.length-1].trim()
-            });
-        }
+table.push(normalized);
     }
 
-    return {
-        mode: mode,
-        rows: result
-    };
+    return table;
 }

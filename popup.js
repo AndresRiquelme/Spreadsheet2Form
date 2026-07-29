@@ -1,74 +1,171 @@
-// popup.js
-console.log("POPUP JS VERSION TEST");
-document.getElementById("fill").addEventListener("click", async () => {
+// ======================================================
+//
+// Spreadsheet2Form
+// Popup Controller
+//
+// Developed by Andrés Riquelme
+// Version 1.0 (Beta)
+//
+// ======================================================
 
-    try {
+"use strict";
 
-        // Get the active browser tab (the grading page)
-        const [tab] = await browser.tabs.query({
-            active: true,
-            currentWindow: true
-        });
+console.log("Spreadsheet2Form Popup loaded");
 
-        if (!tab) {
-            throw new Error("No active tab found.");
+document
+    .getElementById("fill")
+    .addEventListener(
+        "click",
+        startPreview
+    );
+
+// ======================================================
+// Start Preview
+// ======================================================
+
+async function startPreview()
+{
+    try
+    {
+        // --------------------------------------------------
+        // Active tab
+        // --------------------------------------------------
+
+        const [tab] =
+            await browser.tabs.query({
+
+                active: true,
+                currentWindow: true
+
+            });
+
+        if (!tab)
+        {
+            throw new Error(
+                "No active tab found."
+            );
         }
 
-        // Read the students currently displayed on the webpage
-        const pageData = await browser.tabs.sendMessage(
-            tab.id,
-            {
-                action: "readPage"
-            }
-        );
+        // --------------------------------------------------
+        // Read grading page
+        // --------------------------------------------------
 
-        // Read and parse the clipboard
-        const clipboardData = await readClipboard();
+        const pageData =
+            await browser.tabs.sendMessage(
 
-        // Compare clipboard with webpage
-        const comparison = compareGrades(
-            clipboardData.rows,
-            pageData
-        );
+                tab.id,
 
-        // Store everything needed by the preview page
+                {
+                    action: "readPage"
+                }
+
+            );
+
+        // --------------------------------------------------
+        // Read clipboard
+        // --------------------------------------------------
+
+        const clipboardData =
+            await readClipboard();
+
+        // --------------------------------------------------
+        // Validate clipboard
+        // --------------------------------------------------
+
+        const validation =
+            validateClipboard(
+                clipboardData.table
+            );
+console.log("VALIDATION");
+console.log(validation);
+console.log("Clipboard table:", clipboardData.table);
+        if (!validation.valid)
+        {
+            alert(
+
+                "Clipboard validation failed.\n\n" +
+
+                validation.errors.join("\n")
+
+            );
+
+            return;
+        }
+
+        // --------------------------------------------------
+        // Compare
+        // --------------------------------------------------
+
+        const comparison =
+            compareGrades(
+
+                validation.rows,
+
+                pageData
+
+            );
+
+        // --------------------------------------------------
+        // Store preview data
+        // --------------------------------------------------
+
         await browser.storage.local.set({
 
             previewData: {
 
-                mode: clipboardData.mode,
+                mode:
+                    validation.mode,
 
-                clipboardRows: clipboardData.rows.length,
+                hasHeader:
+                    validation.hasHeader,
 
-                pageRows: pageData.length,
+                clipboardRows:
+                    validation.statistics.dataRows,
 
-                sourceTabId: tab.id,
+                pageRows:
+                    pageData.length,
 
-                comparison: comparison
+                validation:
+
+                    validation,
+
+                sourceTabId:
+                    tab.id,
+
+                comparison:
+                    comparison
 
             }
 
         });
 
-        // Open the preview page in a new tab
+        // --------------------------------------------------
+        // Open preview
+        // --------------------------------------------------
+
         await browser.tabs.create({
 
-            url: browser.runtime.getURL("preview.html")
+            url:
+                browser.runtime.getURL(
+                    "preview.html"
+                )
 
         });
 
-        // Close the popup (optional, but makes the UX cleaner)
         window.close();
-
     }
-    catch (err) {
-
-        console.error("Calc2Form:", err);
+    catch (err)
+    {
+        console.error(err);
 
         alert(
-            "Error:\n\n" + err.message
-        );
 
+    "Spreadsheet2Form\n\n" +
+
+    err.message +
+
+    "\n\nSee Browser Console (Ctrl+Shift+J) for details."
+
+);
     }
-
-});
+}

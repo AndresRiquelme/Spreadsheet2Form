@@ -584,3 +584,25 @@ footer {
     min-width: 120px;
 
 }
+
+/* ==========================================================
+   Footer
+   ========================================================== */
+#footer {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #d8dde3;
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+#footerVersion {
+    font-weight: 600;
+}
+
+#footerAuthor {
+    margin-top: 4px;
+    font-style: italic;
+}
