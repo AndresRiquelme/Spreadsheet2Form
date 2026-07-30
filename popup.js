@@ -10,8 +10,6 @@
 
 "use strict";
 
-console.log("Spreadsheet2Form Popup loaded");
-
 document
     .getElementById("fill")
     .addEventListener(
@@ -76,21 +74,23 @@ async function startPreview()
             validateClipboard(
                 clipboardData.table
             );
-console.log("VALIDATION");
-console.log(validation);
-console.log("Clipboard table:", clipboardData.table);
-        if (!validation.valid)
-        {
-            alert(
 
-                "Clipboard validation failed.\n\n" +
+if (!validation.valid)
+{
+showMessage(
 
-                validation.errors.join("\n")
+    "error",
 
-            );
+    "Clipboard Validation Failed",
 
-            return;
-        }
+    "The copied data cannot be processed.\n\n" +
+
+    validation.errors.join("\n")
+
+);
+
+    return;
+}
 
         // --------------------------------------------------
         // Compare
@@ -154,18 +154,18 @@ console.log("Clipboard table:", clipboardData.table);
 
         window.close();
     }
-    catch (err)
-    {
-        console.error(err);
+catch (err)
+{
+    console.error(err);
 
-        alert(
+    showMessage(
 
-    "Spreadsheet2Form\n\n" +
+        "error",
 
-    err.message +
+        "❌ Unexpected Error",
 
-    "\n\nSee Browser Console (Ctrl+Shift+J) for details."
+        err.message
 
-);
-    }
+    );
+}
 }

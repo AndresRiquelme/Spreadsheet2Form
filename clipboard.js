@@ -68,7 +68,6 @@ function buildTable(lines)
 
     for (const line of lines)
     {
-        console.log("RAW LINE:", JSON.stringify(line));
 
 const cells =
     line
