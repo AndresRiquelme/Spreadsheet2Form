@@ -7,7 +7,7 @@
 // from spreadsheets to web-based grading systems.
 //
 // Developed by Andrés Riquelme
-// Version 1.0 (Beta)
+// Version 1.0.0 (Beta)
 //
 // ======================================================
 
@@ -36,7 +36,7 @@ const STATUS_INFO = Object.freeze({
 
     [STATUS.SAME]: {
         className: "same",
-        label: "Correct"
+        label: "No Change"
     },
 
     [STATUS.MISSING]: {
@@ -99,7 +99,7 @@ function showModal({
 {
     modalTitle.textContent = title;
 
-    modalMessage.textContent = message;
+    modalMessage.innerHTML = message;
 
     modalOk.textContent = okText;
 
@@ -110,7 +110,7 @@ function showModal({
 
     modalOverlay.classList.remove("hidden");
 
-    modalOk.focus();
+    requestAnimationFrame(() => modalOk.focus());
 
     return new Promise(resolve => {
 
@@ -156,8 +156,21 @@ async function initialize()
 
     if (!stored.previewData)
     {
-        alert("No preview data available.");
-        return;
+    await showModal({
+
+        title: "Spreadsheet2Form",
+
+        message: "No preview data is available.\n\nPlease return to the popup and perform a new comparison.",
+
+        okText: "Close",
+
+        showCancel: false
+
+    });
+
+    window.close();
+
+    return;
     }
 
     previewData = stored.previewData;
@@ -403,29 +416,56 @@ async function applyChanges()
 
     const updates =
         comparison.filter(
-            row => row.status === STATUS.DUPLICATE
+            row => row.status === STATUS.UPDATE
         );
 
     if (updates.length === 0)
     {
-        alert(
-            "There are no grades to update."
-        );
+        await showModal({
+
+        title: "Nothing to Update",
+
+        message:
+
+        "No grade changes were detected.\n\nThe grading page already matches the spreadsheet.",
+
+         okText: "Close",
+
+         showCancel: false
+
+    });
         return;
     }
 
-    const confirmed = confirm(
+    const confirmed =
+    await showModal({
+
+        title: "Confirm Grade Update",
+
+        message:
 
 `Update the grading page with the proposed changes?
 
-${updates.length} grade(s) will be updated.
+<strong>${updates.length}</strong> grade(s) will be updated.
 
-Spreadsheet2Form only updates the grade fields.
-No grades will be submitted.
+Spreadsheet2Form only updates grade fields.
 
-You must still use the grading page's own Submit button to finalize the grades.`
+No grades will be submitted automatically.
 
-    );
+You must still use the grading page's own Submit button.`,
+
+        okText: "Update",
+
+        cancelText: "Cancel",
+
+        showCancel: true
+
+    });
+
+if (!confirmed)
+{
+    return;
+}
 
     if (!confirmed)
         return;
@@ -442,17 +482,25 @@ You must still use the grading page's own Submit button to finalize the grades.`
 
         );
 
-    alert(
+await showModal({
 
-`Spreadsheet2Form has finished updating the grading page.
+    title: "Update Completed",
 
-Updated grades: ${result.updated}
+    message:
 
-The modified fields have been highlighted in pale yellow.
+`Spreadsheet2Form has finished updating the grading page.<br>
 
-Review the changes on the grading page before using its Submit button.`
+Updated grades: <strong>${result.updated}</strong><br>
 
-    );
+The modified fields have been highlighted in pale yellow.<br>
+
+Review the changes before using the grading page's Submit button.`,
+
+    okText: "Close",
+
+    showCancel: false
+
+});
 
     window.close();
 }

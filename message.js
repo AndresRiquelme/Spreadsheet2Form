@@ -19,10 +19,24 @@ function showMessage(type, title, text)
         main.style.display = "none";
     }
 
+// Reset message style before applying
+// the current message type.
+
     box.className = "message";
 
     const icon =
         document.getElementById("messageIcon");
+
+const ICON = Object.freeze({
+
+    ERROR: "\u274C",
+
+    WARNING: "\u26A0",
+
+    SUCCESS: "\u2705"
+
+});
+
 
 switch (type)
 {
@@ -30,7 +44,7 @@ switch (type)
 
         box.classList.add("messageError");
 
-        icon.textContent = "❌";
+        icon.textContent = ICON.ERROR;
 
         break;
 
@@ -38,15 +52,16 @@ switch (type)
 
         box.classList.add("messageWarning");
 
-        icon.textContent = "⚠";
+        icon.textContent = ICON.WARNING;
 
         break;
 
     case "success":
-
+    // Reserved for future workflows
+    // (e.g. successful grade update).
         box.classList.add("messageSuccess");
 
-        icon.textContent = "✅";
+        icon.textContent = ICON.SUCCESS;
 
         break;
 }

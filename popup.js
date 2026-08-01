@@ -4,18 +4,19 @@
 // Popup Controller
 //
 // Developed by Andrés Riquelme
-// Version 1.0 (Beta)
+// Version 1.0.0 (Beta)
 //
 // ======================================================
 
 "use strict";
 
-document
-    .getElementById("fill")
-    .addEventListener(
-        "click",
-        startPreview
-    );
+const fillButton =
+    document.getElementById("fill");
+
+fillButton.addEventListener(
+    "click",
+    startPreview
+);
 
 // ======================================================
 // Start Preview
@@ -77,17 +78,17 @@ async function startPreview()
 
 if (!validation.valid)
 {
-showMessage(
+    showMessage(
 
-    "error",
+        "error",
 
-    "Clipboard Validation Failed",
+        "Clipboard Validation Failed",
 
-    "The copied data cannot be processed.\n\n" +
+        "The copied data cannot be processed.\n\n" +
 
-    validation.errors.join("\n")
+        validation.errors.join("\n")
 
-);
+    );
 
     return;
 }
@@ -162,7 +163,7 @@ catch (err)
 
         "error",
 
-        "❌ Unexpected Error",
+        "Unexpected Error",
 
         err.message
 

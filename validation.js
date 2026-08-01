@@ -6,7 +6,7 @@
 // Validates clipboard data before comparison.
 //
 // Developed by Andrés Riquelme
-// Version 1.0 (Beta)
+// Version 1.0.0
 //
 // ======================================================
 
@@ -16,15 +16,15 @@
 // Constants
 // ======================================================
 
-const MODE = {
+const MODE = Object.freeze({
 
     SEQUENTIAL: "sequential",
 
     ID: "id"
 
-};
+});
 
-const HEADER_WORDS = [
+const HEADER_WORDS = Object.freeze([
 
     // ID column
 
@@ -50,7 +50,7 @@ const HEADER_WORDS = [
     "calificacion",
     "calificación"
 
-];
+]);
 
 // ======================================================
 // Public API

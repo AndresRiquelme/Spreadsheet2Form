@@ -5,7 +5,7 @@
 // into a common internal representation.
 //
 // Developed by Andrés Riquelme
-// Version 1.0 (Beta)
+// Version 1.0.0 (Beta)
 //
 // ======================================================
 
@@ -21,7 +21,7 @@ async function readClipboard()
         await navigator.clipboard.readText();
 
     const lines =
-        normalizeLines(rawText);
+        splitLines(rawText);
 
     const table =
         buildTable(lines);
@@ -38,10 +38,10 @@ async function readClipboard()
 }
 
 // ======================================================
-// Normalize Lines
+// Split Lines
 // ======================================================
 
-function normalizeLines(text)
+function splitLines(text)
 {
     const lines =
         text.split(/\r?\n/);
@@ -69,13 +69,18 @@ function buildTable(lines)
     for (const line of lines)
     {
 
-const cells =
+    const cells =
     line
         .split("\t")
         .map(cell => cell.trim());
-// LibreOffice Calc keeps empty columns when copying
-// non-contiguous selections (Ctrl + click). Remove
-// those empty fields before validation.
+
+
+// LibreOffice Calc inserts empty tab-separated fields
+// when copying non-contiguous columns (Ctrl + Click).
+// Remove those empty cells so the resulting table has
+// the expected one or two logical columns.
+
+
 const normalized =
     cells.filter(cell => cell !== "");
 

@@ -1,9 +1,7 @@
 // ======================================================
 // Spreadsheet2Form - content.js
 // ======================================================
-
-console.log("Spreadsheet2Form content.js loaded");
-
+"use strict";
 
 // ======================================================
 // Read grades from the grading page
@@ -33,14 +31,14 @@ function readGradesFromPage()
         // 2 -> Student name
         // 3 -> Grade input
         //
-        if (cells.length < 3)
+        if (cells.length < 4)
             return;
 
         const id =
-            cells[1].innerText.trim();
+            cells[1].textContent.trim();
 
         const name =
-            cells[2].innerText.trim();
+            cells[2].textContent.trim();
 
         records.push({
 
@@ -102,18 +100,11 @@ function applyGrades(comparison)
     return updated;
 }
 
-
-
 // ======================================================
 // Message handler
 // ======================================================
 
 browser.runtime.onMessage.addListener((message) => {
-
-    console.log(
-        "Spreadsheet2Form message:",
-        message.action
-    );
 
     switch (message.action)
     {
@@ -122,8 +113,6 @@ browser.runtime.onMessage.addListener((message) => {
 
             const pageData =
                 readGradesFromPage();
-
-            console.table(pageData);
 
             return Promise.resolve(pageData);
 
