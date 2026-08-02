@@ -1,14 +1,20 @@
 # Spreadsheet2Form
 
 <p align="center">
+  <img src="docs/images/banner.png" alt="Spreadsheet2Form" width="900">
+</p>
 
-<img src="images/logo.png" alt="Spreadsheet2Form Logo" width="180">
+<p align="center">
+
+![Firefox](https://img.shields.io/badge/Firefox-WebExtension-orange)
+![License](https://img.shields.io/badge/License-GPLv3-blue)
+![Version](https://img.shields.io/badge/version-1.0.0-green)
 
 </p>
 
 <p align="center">
 
-**A Firefox extension for safely transferring grade data from spreadsheets to web forms.**
+**Safely transfer grade data from spreadsheets into web-based grading systems using a guided verification workflow.**
 
 </p>
 
@@ -20,7 +26,7 @@ Spreadsheet2Form is an open-source Firefox extension designed to help instructor
 
 Unlike simple automation tools that blindly simulate keyboard input, Spreadsheet2Form validates clipboard contents, compares spreadsheet data with the destination webpage, and presents a preview of all proposed changes before any modification is applied.
 
-The primary goal of the project is **data integrity**, reducing transcription errors while simplifying repetitive grading tasks.
+The primary goal of Spreadsheet2Form is protecting **data integrity** by reducing transcription errors while simplifying repetitive grading tasks.
 
 ---
 
@@ -48,6 +54,57 @@ The extension never writes data directly from the clipboard into the webpage wit
 * Modular source code designed for future expansion.
 
 ---
+# Screenshots
+
+## 1. Select the grades in your spreadsheet
+
+<p align="center">
+<img src="docs/images/screenshot-01-selection.png" width="850">
+</p>
+
+Select the grades (or Student ID + Grade) to copy.
+
+---
+
+## 2. Open Spreadsheet2Form
+
+<p align="center">
+<img src="docs/images/screenshot-02-popup.png" width="350">
+</p>
+
+Start the comparison from the Firefox toolbar.
+
+---
+
+## 3. Review the proposed changes
+
+<p align="center">
+<img src="docs/images/screenshot-03-preview.png" width="900">
+</p>
+
+Verify every proposed update before modifying the grading page.
+
+---
+
+## 4. Update the grading page
+
+<p align="center">
+<img src="docs/images/screenshot-05-updated-page.png" width="850">
+</p>
+
+Only grade fields are modified.
+Updated values are highlighted.
+
+---
+
+## 5. Confirmation
+
+<p align="center">
+<img src="docs/images/screenshot-06-success.png" width="500">
+</p>
+
+Spreadsheet2Form reports the number of updated grades.
+
 
 # How Spreadsheet2Form Works
 
@@ -174,11 +231,13 @@ Contributions and adaptations are encouraged. The long-term vision is to support
 ## Version 1.1 (planned)
 
 * Institution profiles
+* iframe support
 * User preferences
 * Support for additional university grading systems
 * Configurable webpage selectors
-* Improved reporting
+* Refined user interface
 * Additional validation rules
+* Simplified icon set optimized for small toolbar sizes (16×16 and 32×32)
 
 ---
 
@@ -212,9 +271,13 @@ For the complete license text, see the accompanying **LICENSE** file.
 
 ---
 
-# Author
+## Author
 
 **Andrés Riquelme**
 
-Open-source educational software developer.
+*Independent open-source educational software developer.*
+
+Spreadsheet2Form was created to help educators reduce errors when transferring grades from spreadsheets into institutional web-based grading systems.
+
+I believe educational software should be transparent, reliable, and freely available. This project is released as open-source software under the GNU GPL v3, and contributions, suggestions, and bug reports are always welcome.
 

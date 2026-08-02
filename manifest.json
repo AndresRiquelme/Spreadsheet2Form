@@ -5,7 +5,15 @@
 
   "version": "1.0.0",
 
-  "description": "Safely transfer spreadsheet grade data into web-based grading forms."
+  "description": "Transfer grades from spreadsheets to Firefox forms safely.",
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "96": "icons/icon96.png",
+    "128": "icons/icon128.png"
+  },
 
   "permissions": [
     "activeTab",
@@ -22,14 +30,10 @@
     "default_popup": "popup.html"
   },
 
-"content_scripts": [
-  {
-    "matches": [
-       "<all_urls>"
-    ],
-    "js": [
-    	"content.js"
-    ]
-  }
-]
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
 }
